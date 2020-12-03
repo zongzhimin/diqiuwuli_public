@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from data_process.readSu import read_su
+from data_process.readSu import read_su,read_su_trace
 
 # 读取su文件里的道数据
 # 需要先安装 obspy
 # conda config --add channels conda-forge
 # conda install obspy
 def read_su_example():
-    traces = read_su('su file path')
+    traces = read_su_trace('su file path')
 
 # 示例
 # 读取512个su文件的道数据到numpy数组
@@ -22,9 +22,8 @@ def su2numpy():
     data_all = np.zeros(512,33,10240)
     for file_i in range(2048):
         # 得到10240*33的数据
-        traces = read_su('su_path' + str(file_i) + '.shot1')
-        # 转置成33*10240
-        traces = traces.T
+        traces = read_su_trace('su_path' + str(file_i) + '.shot1')
+
         # 道数据直达波和反射波大小调整 过大的部分直接截取
         traces = traces.clip(-epison, epison)
         # 数据放大到 -1 到 1 之间
