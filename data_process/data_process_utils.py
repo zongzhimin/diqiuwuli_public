@@ -32,3 +32,7 @@ def su2numpy():
     np.save('data_all',data_all)
 
 
+# 打乱数据
+def data_shuffle(x, y):
+    index = np.random.permutation(x.shape[0])
+    return x[index, :, :], y[index, :]
