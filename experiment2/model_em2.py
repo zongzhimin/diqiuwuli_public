@@ -331,7 +331,7 @@ class FcCvModelV7(Model):
         return x
 
 
-# 直接暴力全连接
+# 直接全连接
 # 网络单元数可能会变很大
 class FcCvModelV8(Model):
     def __init__(self):
