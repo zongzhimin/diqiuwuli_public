@@ -27,6 +27,7 @@ model = FcCvModel()
 loss_log_path = './tf_dir/loss_all'
 loss_summary_writer = tf.summary.create_file_writer(loss_log_path)
 
+
 for epoch in range(epochs):
     with tf.GradientTape() as tape:
         y_pred = model(train_data)
