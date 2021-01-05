@@ -14,7 +14,7 @@ class FcCvModel(Model):
         ])
         # 1维卷积综合提取特征
         self.conv = Sequential([
-            layers.Conv1D(filters=4,kernel_size=5,strides=5),
+            layers.Conv1D(filters=4, kernel_size=5, strides=5),
 
             layers.BatchNormalization(),
             layers.Activation('relu')
@@ -28,10 +28,10 @@ class FcCvModel(Model):
         batchSize, dao_num, data_num = inputs.shape
         x = tf.reshape(inputs, (-1, 1024))
         x = self.fcOne(x)
-        x = tf.reshape(x, (batchSize, dao_num,-1))
-        x = tf.transpose(x,perm=[0,2,1])
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
         x = self.conv(x)
-        x = tf.reshape(x,(batchSize,-1))
+        x = tf.reshape(x, (batchSize, -1))
         x = self.fcThree(x)
         return x
 
@@ -50,7 +50,7 @@ class FcCvModelV2(Model):
         self.dropout = layers.Dropout(0.2)
         # 1维卷积综合提取特征
         self.conv = Sequential([
-            layers.Conv1D(filters=4,kernel_size=5,strides=5),
+            layers.Conv1D(filters=4, kernel_size=5, strides=5),
 
             layers.BatchNormalization(),
             layers.Activation('relu')
@@ -64,11 +64,11 @@ class FcCvModelV2(Model):
         batchSize, dao_num, data_num = inputs.shape
         x = tf.reshape(inputs, (-1, 1024))
         x = self.fcOne(x)
-        x = tf.reshape(x, (batchSize, dao_num,-1))
-        x = tf.transpose(x,perm=[0,2,1])
-        x = self.dropout(x,training=training)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout(x, training=training)
         x = self.conv(x)
-        x = tf.reshape(x,(batchSize,-1))
+        x = tf.reshape(x, (batchSize, -1))
         x = self.fcThree(x)
         return x
 
@@ -88,7 +88,7 @@ class FcCvModelV3(Model):
         self.dropout = layers.Dropout(0.2)
         # 1维卷积综合提取特征
         self.conv = Sequential([
-            layers.Conv1D(filters=16,kernel_size=8,strides=1,padding='same'),
+            layers.Conv1D(filters=16, kernel_size=8, strides=1, padding='same'),
             layers.BatchNormalization(),
             layers.Activation('relu'),
             layers.Conv1D(filters=4, kernel_size=8, strides=8, padding='valid'),
@@ -104,11 +104,11 @@ class FcCvModelV3(Model):
         batchSize, dao_num, data_num = inputs.shape
         x = tf.reshape(inputs, (-1, 1024))
         x = self.fcOne(x)
-        x = tf.reshape(x, (batchSize, dao_num,-1))
-        x = tf.transpose(x,perm=[0,2,1])
-        x = self.dropout(x,training=training)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout(x, training=training)
         x = self.conv(x)
-        x = tf.reshape(x,(batchSize,-1))
+        x = tf.reshape(x, (batchSize, -1))
         x = self.fcThree(x)
         return x
 
@@ -129,7 +129,7 @@ class FcCvModelV4(Model):
         self.dropout = layers.Dropout(0.2)
         # 1维卷积综合提取特征
         self.conv = Sequential([
-            layers.Conv1D(filters=16,kernel_size=8,strides=1,padding='same'),
+            layers.Conv1D(filters=16, kernel_size=8, strides=1, padding='same'),
             layers.BatchNormalization(),
             layers.Activation('relu'),
             layers.Conv1D(filters=4, kernel_size=8, strides=1, padding='valid'),
@@ -148,11 +148,11 @@ class FcCvModelV4(Model):
         batchSize, dao_num, data_num = inputs.shape
         x = tf.reshape(inputs, (-1, 1024))
         x = self.fcOne(x)
-        x = tf.reshape(x, (batchSize, dao_num,-1))
-        x = tf.transpose(x,perm=[0,2,1])
-        x = self.dropout(x,training=training)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout(x, training=training)
         x = self.conv(x)
-        x = tf.reshape(x,(batchSize,-1))
+        x = tf.reshape(x, (batchSize, -1))
         x = self.fcThree(x)
         return x
 
@@ -177,7 +177,7 @@ class FcCvModelV5(Model):
 
         # 1维卷积综合提取特征
         self.conv1 = Sequential([
-            layers.Conv1D(filters=16,kernel_size=9,strides=1,padding='same'),
+            layers.Conv1D(filters=16, kernel_size=9, strides=1, padding='same'),
             layers.BatchNormalization(),
             layers.Activation('relu')
         ])
@@ -202,17 +202,18 @@ class FcCvModelV5(Model):
         batchSize, dao_num, data_num = inputs.shape
         x = tf.reshape(inputs, (-1, 1024))
         x = self.fcOne(x)
-        x = tf.reshape(x, (batchSize, dao_num,-1))
-        x = tf.transpose(x,perm=[0,2,1])
-        x = self.dropout_fc(x,training=training)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout_fc(x, training=training)
         x = self.conv1(x)
         x = self.dropout_c1(x)
         x = self.conv2(x)
         x = self.dropout_c2(x)
         x = self.conv3(x)
-        x = tf.reshape(x,(batchSize,-1))
+        x = tf.reshape(x, (batchSize, -1))
         x = self.fcThree(x)
         return x
+
 
 # 加上DropOut
 # 增加"视野"
@@ -236,7 +237,7 @@ class FcCvModelV6(Model):
 
         # 1维卷积综合提取特征
         self.conv1 = Sequential([
-            layers.Conv1D(filters=16,kernel_size=9,strides=1,padding='same'),
+            layers.Conv1D(filters=16, kernel_size=9, strides=1, padding='same'),
             layers.BatchNormalization(),
             layers.LeakyReLU(0.2)
         ])
@@ -260,13 +261,13 @@ class FcCvModelV6(Model):
     def call(self, inputs, training=None, mask=None):
         batchSize, dao_num, data_num = inputs.shape
         x = self.conv(inputs)
-        x = self.dropout_c(x,training=training)
+        x = self.dropout_c(x, training=training)
         x = self.conv1(x)
         x = self.dropout_c1(x)
         x = self.conv2(x)
         x = self.dropout_c2(x)
         x = self.conv3(x)
-        x = tf.reshape(x,(batchSize,-1))
+        x = tf.reshape(x, (batchSize, -1))
         x = self.fcThree(x)
         return x
 
@@ -293,7 +294,7 @@ class FcCvModelV7(Model):
 
         # 1维卷积综合提取特征
         self.conv1 = Sequential([
-            layers.Conv1D(filters=16,kernel_size=25,strides=1,padding='same'),
+            layers.Conv1D(filters=16, kernel_size=25, strides=1, padding='same'),
             layers.BatchNormalization(),
             layers.Activation('relu')
         ])
@@ -318,15 +319,15 @@ class FcCvModelV7(Model):
         batchSize, dao_num, data_num = inputs.shape
         x = tf.reshape(inputs, (-1, 1024))
         x = self.fcOne(x)
-        x = tf.reshape(x, (batchSize, dao_num,-1))
-        x = tf.transpose(x,perm=[0,2,1])
-        x = self.dropout_fc(x,training=training)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout_fc(x, training=training)
         x = self.conv1(x)
         x = self.dropout_c1(x)
         x = self.conv2(x)
         x = self.dropout_c2(x)
         x = self.conv3(x)
-        x = tf.reshape(x,(batchSize,-1))
+        x = tf.reshape(x, (batchSize, -1))
         x = self.fcThree(x)
         return x
 
@@ -362,7 +363,272 @@ class FcCvModelV8(Model):
         batchSize, dao_num, data_num = inputs.shape
         x = tf.reshape(inputs, (-1, 1024))
         x = self.fcOne(x)
-        x = tf.reshape(x, (batchSize,-1))
-        x = self.dropout_fc(x,training=training)
+        x = tf.reshape(x, (batchSize, -1))
+        x = self.dropout_fc(x, training=training)
         x = self.fcTwo(x)
+        return x
+
+
+# V8全连接很好说明一维卷积可以调整到更好
+# 增加"视野"
+# 增加卷积核
+class FcCvModelV9(Model):
+    def __init__(self):
+        super(FcCvModelV9, self).__init__()
+        # 多层全链接的第一层，每一道数据的提取
+        # 实际上是在每道上的滑动全连接
+        self.fcOne = Sequential([
+            layers.Dense(8),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # 1.减少过拟合的情况
+        # 2.模拟道数据的丢失
+        self.dropout_fc = layers.Dropout(0.3)
+
+        # 1维卷积综合提取特征
+        self.conv1 = Sequential([
+            layers.Conv1D(filters=16, kernel_size=64, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # self.dropout_c1 = layers.Dropout(0.3)
+        self.conv2 = Sequential([
+            layers.Conv1D(filters=8, kernel_size=64, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # self.dropout_c2 = layers.Dropout(0.3)
+        self.conv3 = Sequential([
+            layers.Conv1D(filters=4, kernel_size=8, strides=8, padding='valid'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # 最终作出异常体坐标与半径的预测
+        self.fcThree = Sequential([
+            layers.Dense(3)
+        ])
+
+    def call(self, inputs, training=None, mask=None):
+        batchSize, dao_num, data_num = inputs.shape
+        x = tf.reshape(inputs, (-1, 1024))
+        x = self.fcOne(x)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout_fc(x, training=training)
+        x = self.conv1(x)
+        # x = self.dropout_c1(x)
+        x = self.conv2(x)
+        # x = self.dropout_c2(x)
+        x = self.conv3(x)
+        x = tf.reshape(x, (batchSize, -1))
+        x = self.fcThree(x)
+        return x
+
+
+# V9基础上道数据提取加层数
+class FcCvModelV10(Model):
+    def __init__(self):
+        super(FcCvModelV10, self).__init__()
+        # 多层全链接的第一层，每一道数据的提取
+        # 实际上是在每道上的滑动全连接
+        self.fcOne = Sequential([
+            layers.Dense(64),
+            layers.Dense(8),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # 1.减少过拟合的情况
+        # 2.模拟道数据的丢失
+        self.dropout_fc = layers.Dropout(0.3)
+
+        # 1维卷积综合提取特征
+        self.conv1 = Sequential([
+            layers.Conv1D(filters=32, kernel_size=9, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c1 = layers.Dropout(0.3)
+        self.conv2 = Sequential([
+            layers.Conv1D(filters=64, kernel_size=9, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c2 = layers.Dropout(0.3)
+        self.conv3 = Sequential([
+            layers.Conv1D(filters=128, kernel_size=8, strides=8, padding='valid'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # 最终作出异常体坐标与半径的预测
+        self.fcThree = Sequential([
+            layers.Dense(3)
+        ])
+
+    def call(self, inputs, training=None, mask=None):
+        batchSize, dao_num, data_num = inputs.shape
+        x = tf.reshape(inputs, (-1, 1024))
+        x = self.fcOne(x)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout_fc(x, training=training)
+        x = self.conv1(x)
+        x = self.dropout_c1(x, training=training)
+        x = self.conv2(x)
+        x = self.dropout_c2(x, training=training)
+        x = self.conv3(x)
+        x = tf.reshape(x, (batchSize, -1))
+        x = self.fcThree(x)
+        return x
+
+
+# V10继续加一维卷积层。因为全fc表现良好
+# 基础上道数据提取加层数
+class FcCvModelV11(Model):
+    def __init__(self):
+        super(FcCvModelV11, self).__init__()
+        # 多层全链接的第一层，每一道数据的提取
+        # 实际上是在每道上的滑动全连接
+        self.fcOne = Sequential([
+            layers.Dense(64),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2),
+            layers.Dense(8),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # 1.减少过拟合的情况
+        # 2.模拟道数据的丢失
+        self.dropout_fc = layers.Dropout(0.3)
+
+        # 1维卷积综合提取特征
+        self.conv1 = Sequential([
+            layers.Conv1D(filters=32, kernel_size=9, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c1 = layers.Dropout(0.3)
+        self.conv2 = Sequential([
+            layers.Conv1D(filters=64, kernel_size=9, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c2 = layers.Dropout(0.3)
+        self.conv3 = Sequential([
+            layers.Conv1D(filters=64, kernel_size=9, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c3 = layers.Dropout(0.3)
+        self.conv4 = Sequential([
+            layers.Conv1D(filters=128, kernel_size=8, strides=8, padding='valid'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # 最终作出异常体坐标与半径的预测
+        self.fcThree = Sequential([
+            layers.Dense(3)
+        ])
+
+    def call(self, inputs, training=None, mask=None):
+        batchSize, dao_num, data_num = inputs.shape
+        x = tf.reshape(inputs, (-1, 1024))
+        x = self.fcOne(x)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout_fc(x, training=training)
+        x = self.conv1(x)
+        x = self.dropout_c1(x, training=training)
+        x = self.conv2(x)
+        x = self.dropout_c2(x, training=training)
+        x = self.conv3(x)
+        x = self.dropout_c3(x, training=training)
+        x = self.conv4(x)
+        x = tf.reshape(x, (batchSize, -1))
+        x = self.fcThree(x)
+        return x
+
+
+# V11网络加深
+class FcCvModelV12(Model):
+    def __init__(self):
+        super(FcCvModelV12, self).__init__()
+        # 多层全链接的第一层，每一道数据的提取
+        # 实际上是在每道上的滑动全连接
+        self.fcOne = Sequential([
+            layers.Dense(64),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2),
+            layers.Dense(8),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # 1.减少过拟合的情况
+        # 2.模拟道数据的丢失
+        self.dropout_fc = layers.Dropout(0.3)
+
+        # 1维卷积综合提取特征
+        self.conv1 = Sequential([
+            layers.Conv1D(filters=64, kernel_size=9, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c1 = layers.Dropout(0.3)
+        self.conv2 = Sequential([
+            layers.Conv1D(filters=64, kernel_size=9, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c2 = layers.Dropout(0.3)
+        # 1维卷积综合提取特征+降维
+        self.conv3 = Sequential([
+            layers.Conv1D(filters=128, kernel_size=4, strides=4, padding='valid'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c3 = layers.Dropout(0.3)
+        # 1维卷积综合提取特征
+        self.conv4 = Sequential([
+            layers.Conv1D(filters=128, kernel_size=7, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c4 = layers.Dropout(0.3)
+        self.conv5 = Sequential([
+            layers.Conv1D(filters=128, kernel_size=7, strides=1, padding='same'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        self.dropout_c5 = layers.Dropout(0.3)
+        # 1维卷积综合提取特征+降维
+        self.conv6 = Sequential([
+            layers.Conv1D(filters=256, kernel_size=4, strides=4, padding='valid'),
+            layers.BatchNormalization(),
+            layers.LeakyReLU(0.2)
+        ])
+        # 最终作出异常体坐标与半径的预测
+        self.fcThree = Sequential([
+            layers.Dense(3)
+        ])
+
+    def call(self, inputs, training=None, mask=None):
+        batchSize, dao_num, data_num = inputs.shape
+        x = tf.reshape(inputs, (-1, 1024))
+        x = self.fcOne(x)
+        x = tf.reshape(x, (batchSize, dao_num, -1))
+        x = tf.transpose(x, perm=[0, 2, 1])
+        x = self.dropout_fc(x, training=training)
+        x = self.conv1(x)
+        x = self.dropout_c1(x, training=training)
+        x = self.conv2(x)
+        x = self.dropout_c2(x, training=training)
+        x = self.conv3(x)
+        x = self.dropout_c3(x, training=training)
+        x = self.conv4(x)
+        x = self.dropout_c4(x, training=training)
+        x = self.conv5(x)
+        x = self.dropout_c5(x, training=training)
+        x = self.conv6(x)
+        x = tf.reshape(x, (batchSize, -1))
+        x = self.fcThree(x)
         return x
