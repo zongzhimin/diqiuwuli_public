@@ -3,4 +3,6 @@ import tensorflow as tf
 
 import numpy as np
 
-np.concatenate()
+np.mean(np.abs())
+
+np.concatenate
